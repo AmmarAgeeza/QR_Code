@@ -10,7 +10,7 @@ class ScanQRCodePage extends StatefulWidget {
 }
 
 class _ScanQRCodePageState extends State<ScanQRCodePage> {
-  String dropdownvalue = 'Item 1';
+  String dropDownValue = 'Item 1';
 
   // List of items in our dropdown menu
   var items = [
@@ -101,7 +101,7 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
                 ),
                 Row(
                   children: [
-                    SizedBox(
+                 const   SizedBox(
                       width: 40,
                     ),
                     Container(
@@ -121,7 +121,7 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
                         children: [
                           DropdownButton(
                             // Initial Value
-                            value: dropdownvalue,
+                            value: dropDownValue,
 
                             // Down Arrow Icon
                             icon: const Icon(Icons.keyboard_arrow_down),
@@ -137,7 +137,7 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
                             // change button value to selected value
                             onChanged: (String? newValue) {
                               setState(() {
-                                dropdownvalue = newValue!;
+                                dropDownValue = newValue!;
                               });
                             },
                           ),

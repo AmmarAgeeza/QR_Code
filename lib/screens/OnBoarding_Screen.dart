@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
+import '../widgets/custom_image.dart';
 import 'scan_qr_code_screen.dart';
 
 
@@ -76,13 +77,3 @@ class _OnBoardingState extends State<OnBoarding> {
   }
 }
 
-class BuildImages extends StatelessWidget {
-  const BuildImages({Key? key, required this.image}) : super(key: key);
-
-  final String image;
-
-  @override
-  Widget build(BuildContext context) {
-    return Image(image: AssetImage(image), width: 350,);
-  }
-}
