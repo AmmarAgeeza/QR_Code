@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 
-void main(){
-  runApp(Second());
-}
-class Second extends StatefulWidget {
+
+class ScanQRCodePage extends StatefulWidget {
+  const ScanQRCodePage({Key? key}) : super(key: key);
+
   @override
-  _SecondState createState() => _SecondState();
+  _ScanQRCodePageState createState() => _ScanQRCodePageState();
 }
 
-class _SecondState extends State<Second> {
+class _ScanQRCodePageState extends State<ScanQRCodePage> {
   String dropdownvalue = 'Item 1';
 
   // List of items in our dropdown menu
@@ -43,8 +43,10 @@ class _SecondState extends State<Second> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home:Scaffold(
-          appBar: AppBar(title: Text('Scanning Screen'),),
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Scanning Screen'),
+          ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               if (camState == true) {
@@ -60,61 +62,64 @@ class _SecondState extends State<Second> {
             child: Icon(Icons.camera_alt_outlined),
           ),
           body: Center(
-            child:ListView(
+            child: ListView(
               children: [
                 Container(
-                  padding: EdgeInsets.all(40.0),
+                  padding: const EdgeInsets.all(40.0),
                   child: camState
                       ? Center(
-                    child: SizedBox(
-                      height: 400,
-                      width: 380,
-                      child: QRBarScannerCamera(
-                        onError: (context, error) => Text(
-                          error.toString(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color:Color(0xFF3594DD),
+                          child: SizedBox(
+                            height: 400,
+                            width: 380,
+                            child: QRBarScannerCamera(
+                              onError: (context, error) => Text(
+                                error.toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFF3594DD),
+                                ),
+                              ),
+                              qrCodeCallback: (code) {
+                                qrCallback(code);
+                              },
+                            ),
                           ),
-                        ),
-                        qrCodeCallback: (code) {
-                          qrCallback(code);
-                        },
-                      ),
-                    ),
-                  )
+                        )
                       : Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Code :" + _qrInfo!,
-                          style: TextStyle(
-                            fontSize: 25,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Code :" + _qrInfo!,
+                                style: TextStyle(
+                                  fontSize: 25,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
                 ),
-
                 Row(
                   children: [
-                    SizedBox(width: 40,),
-                    Container(
-                        child:ElevatedButton.icon(
-                          onPressed: (){},
-                          icon: Icon(Icons.check,),
-                          label: Text('check'),
-                        )
+                    SizedBox(
+                      width: 40,
                     ),
-                    SizedBox(width: 100,),
-
+                    Container(
+                        child: ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.check,
+                      ),
+                      label: Text('check'),
+                    )),
+                    SizedBox(
+                      width: 100,
+                    ),
                     Container(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           DropdownButton(
-
                             // Initial Value
                             value: dropdownvalue,
 
@@ -139,15 +144,12 @@ class _SecondState extends State<Second> {
                         ],
                       ),
                     ),
-
                   ],
                 )
-
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }
 
