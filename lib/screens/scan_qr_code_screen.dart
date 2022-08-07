@@ -65,86 +65,84 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
             child: const Icon(Icons.camera_alt_outlined),
           ),
           body: Center(
-            child: ListView(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(40.0),
-                  child: camState
-                      ? Center(
-                          child: SizedBox(
-                            height: 400,
-                            width: 380,
-                            child: QRBarScannerCamera(
-                              onError: (context, error) => Text(
-                                error.toString(),
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Color(0xFF3594DD),
-                                ),
+            child: ListView(children: [
+              Container(
+                padding: const EdgeInsets.all(40.0),
+                child: camState
+                    ? Center(
+                        child: SizedBox(
+                          height: 400,
+                          width: 380,
+                          child: QRBarScannerCamera(
+                            onError: (context, error) => Text(
+                              error.toString(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Color(0xFF3594DD),
                               ),
-                              qrCodeCallback: (code) {
-                                qrCallback(code);
-                              },
                             ),
+                            qrCodeCallback: (code) {
+                              qrCallback(code);
+                            },
                           ),
-                        )
-                      : Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Code :: ${qrInfo!}",
-                                style: const TextStyle(
-                                  fontSize: 25,
-                                ),
+                        ),
+                      )
+                    : Center(
+                        child: Column(
+                          //!----------------------------
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Code :: ${qrInfo!}",
+                              style: const TextStyle(
+                                fontSize: 25,
                               ),
-                            ],
-                          ),
-                        ),
-                ),
-                Row(
-                  children: [
-                    const SizedBox(
-                      width: 40,
-                    ),
-                    GetUserById(
-                      dropDownValueDay: dropDownValue,
-                      qrInfoID: qrInfo,
-                    ),
-                    const SizedBox(
-                      width: 100,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        DropdownButton(
-                          // Initial Value
-                          value: dropDownValue,
+                            ),
+                            Row(children: [
+                              const SizedBox(
+                                width: 40,
+                              ),
+                              GetUserById(
+                                dropDownValueDay: dropDownValue,
+                                qrInfoID: qrInfo,
+                              ),
+                              const SizedBox(
+                                width: 100,
+                              ),
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    DropdownButton(
+                                      // Initial Value
+                                      value: dropDownValue,
 
-                          // Down Arrow Icon
-                          icon: const Icon(Icons.keyboard_arrow_down),
+                                      // Down Arrow Icon
+                                      icon:
+                                          const Icon(Icons.keyboard_arrow_down),
 
-                          // Array list of items
-                          items: items.map((String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(items),
-                            );
-                          }).toList(),
-                          // After selecting the desired option,it will
-                          // change button value to selected value
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropDownValue = newValue!;
-                            });
-                          },
+                                      // Array list of items
+                                      items: items.map((String items) {
+                                        return DropdownMenuItem(
+                                          value: items,
+                                          child: Text(items),
+                                        );
+                                      }).toList(),
+                                      // After selecting the desired option,it will
+                                      // change button value to selected value
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          dropDownValue = newValue!;
+                                        });
+                                      },
+                                    ),
+                                  ]),
+                            ]),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
+                      ),
+              ),
+            ]),
           ),
         ));
   }

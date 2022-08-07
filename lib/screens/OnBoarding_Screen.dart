@@ -17,57 +17,59 @@ class _OnBoardingState extends State<OnBoarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IntroductionScreen(
-        pages: [
-          PageViewModel(
-            title: 'Qr Code',
-            body:
-                'Each member of the audience has his own Qr Code to be able to enter the event.',
-            image: const BuildImages(
-              image: '../../images/audience.PNG',
+      body: Center(
+        child: IntroductionScreen(
+          pages: [
+            PageViewModel(
+              title: 'Qr Code',
+              body:
+                  'Each member of the audience has his own Qr Code to be able to enter the event.',
+              image: const BuildImages(
+                image: '../../images/audience.PNG',
+              ),
+              decoration: getPageDecoration(),
             ),
-            decoration: getPageDecoration(),
-          ),
-          PageViewModel(
-            title: 'Scan Qr Code',
-            body:
-                'Each member scans their Qr code to register their attendance every day',
-            image: const BuildImages(
-              image: '../../images/scan.PNG',
+            PageViewModel(
+              title: 'Scan Qr Code',
+              body:
+                  'Each member scans their Qr code to register their attendance every day',
+              image: const BuildImages(
+                image: '../../images/scan.PNG',
+              ),
+              decoration: getPageDecoration(),
             ),
-            decoration: getPageDecoration(),
-          ),
-          PageViewModel(
-            title: 'Acception',
-            body:
-                'If the QR Code is present in the database, the member will be registered successfully',
-            image: const BuildImages(
-              image: '../../images/accept1.PNG',
+            PageViewModel(
+              title: 'Acception',
+              body:
+                  'If the QR Code is present in the database, the member will be registered successfully',
+              image: const BuildImages(
+                image: '../../images/accept1.PNG',
+              ),
+              decoration: getPageDecoration(),
             ),
-            decoration: getPageDecoration(),
-          ),
-          PageViewModel(
-            title: 'Rejection',
-            body:
-                'If the QR Code is not present in the database or was registered on the same day before, the program will not accept this code',
-            image: const BuildImages(
-              image: '../../images/reject1.PNG',
+            PageViewModel(
+              title: 'Rejection',
+              body:
+                  'If the QR Code is not present in the database or was registered on the same day before, the program will not accept this code',
+              image: const BuildImages(
+                image: '../../images/reject1.PNG',
+              ),
+              decoration: getPageDecoration(),
             ),
-            decoration: getPageDecoration(),
+          ],
+          next: const Icon(Icons.arrow_forward),
+          done: const Text(
+            'Done',
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
-        ],
-        next: const Icon(Icons.arrow_forward),
-        done: const Text(
-          'Done',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          onDone: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => const ScanQRCodePage()));
+          },
+          showSkipButton: true,
+          skip: const Text('Skip'),
+          dotsDecorator: getDotDecoration(),
         ),
-        onDone: () {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (_) => const ScanQRCodePage()));
-        },
-        showSkipButton: true,
-        skip: const Text('Skip'),
-        dotsDecorator: getDotDecoration(),
       ),
     );
   }
