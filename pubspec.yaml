@@ -67,6 +67,7 @@ flutter:
      - images/reject1.PNG
      - images/scan.PNG
      - images/logo1.png
+     - images/attend.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
