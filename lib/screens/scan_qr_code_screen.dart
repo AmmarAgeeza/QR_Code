@@ -12,24 +12,24 @@ class ScanQRCodePage extends StatefulWidget {
 }
 
 class _ScanQRCodePageState extends State<ScanQRCodePage> {
-  String dropDownValue = 'Item 1';
+  String dropDownValue = '_Day1';
 
   // List of items in our dropdown menu
   var items = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
+    '_Day1',
+    '_Day2',
+    '_Day3',
+    '_Day4',
+    '_Day5',
   ];
 
-  String? _qrInfo = 'Scan a QR/Bar code';
+  String? qrInfo = '3';
   bool camState = false;
 
   qrCallback(String? code) {
     setState(() {
       camState = false;
-      _qrInfo = code;
+      qrInfo = code;
     });
   }
 
@@ -92,7 +92,7 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Code :" + _qrInfo!,
+                                "Code :: ${qrInfo!}",
                                 style: const TextStyle(
                                   fontSize: 25,
                                 ),
@@ -106,7 +106,10 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
                     const SizedBox(
                       width: 40,
                     ),
-                    CustomButton(),
+                    CustomButton(
+                      dropDownValueDay: dropDownValue,
+                      qrInfoID: qrInfo,
+                    ),
                     const SizedBox(
                       width: 100,
                     ),

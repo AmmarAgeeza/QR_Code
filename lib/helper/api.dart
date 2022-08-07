@@ -55,4 +55,16 @@ class Api {
         .rowByKey(id, fromColumn: 1); //get id=id in row 1(id-row)
     return json == null ? null : User.fromJson(json); //convery json to user-obj
   }
+
+  // ToDo:: 4- update cell for row by id and days .............................................
+  static Future<bool> updateCell({
+    required int id,
+    required String key,
+    required dynamic value,
+  }) async {
+    if (_userSheet == null) return false;
+
+    return _userSheet!.values
+        .insertValueByKeys(value, columnKey: key, rowKey: id);
+  }
 }
