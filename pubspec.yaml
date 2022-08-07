@@ -36,6 +36,10 @@ dependencies:
   introduction_screen: ^3.0.2
   qr_code_scanner: ^1.0.0
   flutter_qr_bar_scanner: ^3.0.2
+  # gsheets-package
+  gsheets: ^0.4.2
+  # fluttertoast: ^8.0.9
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:
