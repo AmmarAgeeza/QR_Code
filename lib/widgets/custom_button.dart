@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:qr_code_mind_game/helper/api.dart';
+import 'package:qr_code_mind_game/services/get_user_by_id.dart';
 
 class CustomButton extends StatefulWidget {
   final String dropDownValueDay;
@@ -16,19 +18,40 @@ class CustomButton extends StatefulWidget {
 }
 
 class _CustomButtonState extends State<CustomButton> {
+  // Future<Widget>
+  check() async {
+    final user = await Api.getById(int.parse(widget.qrInfoID!));
+    print(user!.toJson());
+
+    if (user.setDay(widget.dropDownValueDay) == '1') {
+      print("exist");
+
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(
+          "هذا الطالب تم تسجيله من قبل",
+          style: TextStyle(fontSize: 23, color: Colors.white),
+        ),
+        backgroundColor: Colors.redAccent,
+      ));
+    } else {
+      Api.updateCell(
+          id: int.parse(widget.qrInfoID!),
+          key: widget.dropDownValueDay,
+          value: '1');
+      print('put');
+      // Fluttertoast.showToast(msg: "put", fontSize: 18);
+      Scaffold.of(context).showSnackBar(const SnackBar(
+        content: Text("هذا الطالب تم تسجيله يمكنه الدخول",
+            style: TextStyle(fontSize: 23, color: Colors.white)),
+        backgroundColor: Colors.greenAccent,
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-      onPressed: () async {
-        final user4 = await Api.getById(int.parse(widget.qrInfoID!));
-        print(user4!.toJson());
-
-        Api.updateCell(
-            id: int.parse(widget.qrInfoID!),
-            key: widget.dropDownValueDay,
-            value: '1');
-        print('put');
-      },
+      onPressed: check,
       icon: const Icon(
         Icons.check,
       ),

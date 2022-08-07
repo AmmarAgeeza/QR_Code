@@ -54,4 +54,18 @@ class User {
         UserFields.day4: day4,
         UserFields.day5: day5,
       };
+
+  setDay(String daySelected) {
+    if (daySelected == '_Day1') {
+      return day1;
+    } else if (daySelected == '_Day2') {
+      return day2;
+    } else if (daySelected == '_Day3') {
+      return day3;
+    } else if (daySelected == '_Day4') {
+      return day4;
+    } else if (daySelected == '_Day5') {
+      return day5;
+    }
+  }
 }
