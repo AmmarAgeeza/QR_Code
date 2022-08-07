@@ -23,7 +23,7 @@ class Api {
   static final _gsheets = GSheets(_credentials);
   static Worksheet? _userSheet;
 
-  // ToDo:: 1- init .............................................
+  // ToDo:: 2- init .............................................
   static Future init() async {
     try {
       final spreadsheet = await _gsheets.spreadsheet(_spreadsheetId);
@@ -45,5 +45,14 @@ class Api {
     } catch (err) {
       return await spreadsheet.worksheetByTitle(title)!;
     }
+  }
+
+  // ToDo:: 3- select item by id .............................................
+  static Future<User?> getById(int id) async {
+    if (_userSheet == null) return null;
+
+    final json = await _userSheet!.values.map
+        .rowByKey(id, fromColumn: 1); //get id=id in row 1(id-row)
+    return json == null ? null : User.fromJson(json); //convery json to user-obj
   }
 }
