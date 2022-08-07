@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'package:qr_code_mind_game/services/get_user_by_id.dart';
 import 'package:qr_code_mind_game/widgets/custom_button.dart';
 
 class ScanQRCodePage extends StatefulWidget {
@@ -106,7 +107,7 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
                     const SizedBox(
                       width: 40,
                     ),
-                    CustomButton(
+                    GetUserById(
                       dropDownValueDay: dropDownValue,
                       qrInfoID: qrInfo,
                     ),

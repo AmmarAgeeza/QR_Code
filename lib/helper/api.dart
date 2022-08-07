@@ -19,7 +19,7 @@ class Api {
 }
 
   ''';
-  static final _spreadsheetId = '1LvKIqvd3DlszwP5phoq8mhcpqpVtpaSTZxceFwHOvAc';
+  static const _spreadsheetId = '1LvKIqvd3DlszwP5phoq8mhcpqpVtpaSTZxceFwHOvAc';
   static final _gsheets = GSheets(_credentials);
   static Worksheet? _userSheet;
 
@@ -43,7 +43,7 @@ class Api {
     try {
       return await spreadsheet.addWorksheet(title);
     } catch (err) {
-      return await spreadsheet.worksheetByTitle(title)!;
+      return spreadsheet.worksheetByTitle(title)!;
     }
   }
 
