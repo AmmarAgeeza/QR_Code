@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 
+import 'create_qr_code_screen.dart';
 
 class ScanQRCodePage extends StatefulWidget {
   const ScanQRCodePage({Key? key}) : super(key: key);
@@ -68,53 +69,54 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
                   padding: const EdgeInsets.all(40.0),
                   child: camState
                       ? Center(
-                          child: SizedBox(
-                            height: 400,
-                            width: 380,
-                            child: QRBarScannerCamera(
-                              onError: (context, error) => Text(
-                                error.toString(),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFF3594DD),
-                                ),
-                              ),
-                              qrCodeCallback: (code) {
-                                qrCallback(code);
-                              },
-                            ),
-                          ),
-                        )
-                      : Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Code :" + _qrInfo!,
-                                style: TextStyle(
-                                  fontSize: 25,
-                                ),
-                              ),
-                            ],
+                    child: SizedBox(
+                      height: 400,
+                      width: 380,
+                      child: QRBarScannerCamera(
+                        onError: (context, error) => Text(
+                          error.toString(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF3594DD),
                           ),
                         ),
+                        qrCodeCallback: (code) {
+                          qrCallback(code);
+                        },
+                      ),
+                    ),
+                  )
+                      : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Code :" + _qrInfo!,
+                          style: TextStyle(
+                            fontSize: 25,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Row(
                   children: [
-                 const   SizedBox(
+                    const   SizedBox(
                       width: 40,
                     ),
                     Container(
                         child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.check,
-                      ),
-                      label: Text('check'),
-                    )),
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.check,
+                          ),
+                          label: Text('check'),
+                        )),
                     SizedBox(
                       width: 100,
                     ),
+
                     Container(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -145,11 +147,30 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
                       ),
                     ),
                   ],
-                )
+                ),
+                Row(
+                  children: [
+                    const   SizedBox(
+                      width: 40,
+                    ),
+                    Container(
+                      child: ElevatedButton(
+                        child: const Text('Create Code'),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const QrGenerate()),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
-        ));
+        )
+    );
   }
 }
 
