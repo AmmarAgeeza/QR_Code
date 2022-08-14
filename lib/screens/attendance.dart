@@ -1,37 +1,54 @@
+import 'package:flutter/material.dart';
+
 class Attendance extends StatelessWidget {
-  String username,id,email,day;
-  Attendance({Key? key,required this.username,required this.id,required this.email,required this.day}) : super(key: key);
+  final String username, id, email, day;
+
+  const Attendance(
+      {Key? key,
+      required this.username,
+      required this.id,
+      required this.email,
+      required this.day})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Attendees data",textAlign: TextAlign.center ,),
+        title: const Text(
+          "Attendees data",
+          textAlign: TextAlign.center,
+        ),
         backgroundColor: Colors.deepPurple,
         centerTitle: true,
-
       ),
-      body:Stack(
-        children:[
-          ///container for backgroundimage
+      body: Stack(
+        children: [
+          ///container for background image
           Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('images/attend.jpeg'),
-                    fit: BoxFit.cover
-                )
-            ),
+                    fit: BoxFit.cover)),
             width: double.infinity,
             height: double.infinity,
           ),
+
           ///Attendees data
           Container(
-            padding:const EdgeInsets.only(left: 30,bottom: 20,top: 70,right: 30) ,
+            padding:
+                const EdgeInsets.only(left: 30, bottom: 20, top: 70, right: 30),
             child: Column(
               //crossAxisAlignment: CrossAxisAlignment.values(BoxConstraints.tight(Size:20)),
               //mainAxisAlignment:MainAxisAlignment.spaceEvenly,
               children: [
-                Text('Name : $username',style: const TextStyle(fontSize: 20,fontWeight:FontWeight.bold,color: Colors.white),),
+                Text(
+                  'Name : $username',
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
                 // Padding(
                 //   padding: const EdgeInsets.all(8.0),
                 //   child: TextField(
@@ -43,7 +60,9 @@ class Attendance extends StatelessWidget {
                 //     ),
                 //   ),
                 // ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 const Divider(
                   thickness: 3,
                   indent: 20,
@@ -52,8 +71,14 @@ class Attendance extends StatelessWidget {
                   height: 10,
                 ),
 
-                Text('Id : $id',style: const TextStyle(fontSize: 20,fontWeight:FontWeight.bold,color: Colors.white)),
-                const SizedBox(height: 20,),
+                Text('Id : $id',
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+                const SizedBox(
+                  height: 20,
+                ),
                 const Divider(
                   thickness: 3,
                   indent: 20,
@@ -61,8 +86,14 @@ class Attendance extends StatelessWidget {
                   color: Colors.black54,
                   height: 10,
                 ),
-                Text('Email : $email',style: const TextStyle(fontSize: 20,fontWeight:FontWeight.bold,color: Colors.white)),
-                const SizedBox(height: 20,),
+                Text('Email : $email',
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+                const SizedBox(
+                  height: 20,
+                ),
                 const Divider(
                   thickness: 3,
                   indent: 20,
@@ -70,8 +101,14 @@ class Attendance extends StatelessWidget {
                   color: Colors.black54,
                   height: 10,
                 ),
-                Text('Day : $day',style: const TextStyle(fontSize: 20,fontWeight:FontWeight.bold,color: Colors.white)),
-                const SizedBox(height: 20,),
+                Text('Day : $day',
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+                const SizedBox(
+                  height: 20,
+                ),
                 const Divider(
                   thickness: 3,
                   indent: 20,
@@ -79,36 +116,41 @@ class Attendance extends StatelessWidget {
                   color: Colors.black54,
                   height: 10,
                 ),
-
-
               ],
-
             ),
-
           ),
           Container(
-            padding:const EdgeInsets.only(left: 20,bottom: 20,top: 350,right: 20) ,
-            child: Text('$username attended',style: const TextStyle(fontSize: 30,fontWeight:FontWeight.w400,color: Colors.black),),
-
+            padding: const EdgeInsets.only(
+                left: 20, bottom: 20, top: 350, right: 20),
+            child: Text(
+              '$username attended',
+              style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black),
+            ),
           ),
           Container(
-            padding:const EdgeInsets.only(left: 30,bottom: 20,top: 450) ,
+            padding: const EdgeInsets.only(left: 30, bottom: 20, top: 450),
             child: Row(
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: Colors.deepPurple,
-                      minimumSize: const Size(80,40)
+                      minimumSize: const Size(80, 40)),
+                  onPressed: () {},
+                  // onPressed: () => Navigator.pushReplacement(context,
+                  //     MaterialPageRoute(builder: (context) => const Form())),
+                  child: const Text(
+                    'Back',
+                    style: TextStyle(fontSize: 20),
                   ),
-                  onPressed: ()=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>const Form()))
-                  , child: const Text('Back',style: TextStyle(fontSize: 20), ),)
+                )
               ],
             ),
           )
         ],
       ),
-
-
     );
   }
 }
