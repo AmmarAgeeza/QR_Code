@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_mind_game/helper/api.dart';
+import 'package:qr_code_mind_game/helper/api_gsheets.dart';
 
 class GetUserById extends StatefulWidget {
   final String dropDownValueDay;
@@ -51,6 +51,9 @@ class _GetUserByIdState extends State<GetUserById> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.red)
+      ),
       onPressed: check,
       icon: const Icon(
         Icons.check,

@@ -147,4 +147,3 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
   }
 }
 
-//dropdown item

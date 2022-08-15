@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_mind_game/screens/attendance.dart';
+import 'package:qr_code_mind_game/screens/create_qr_code_screen.dart';
+import 'package:qr_code_mind_game/screens/scan_qr_code_screen.dart';
 
 class Screen extends StatefulWidget {
   const Screen({Key? key}) : super(key: key);
@@ -8,12 +11,43 @@ class Screen extends StatefulWidget {
 }
 
 class _ScreenState extends State<Screen> {
-  var currentPage=DrawerSection.Scan;
+  var currentPage = DrawerSection.Scan;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('drawer'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => ScanQRCodePage()));
+                },
+                child: Text('Scan Screen')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (_) => QrGenerate()));
+                },
+                child: Text('Create Screen')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => Attendance(
+                            username: 'Ammar',
+                            id: '1',
+                            day: '1',
+                            email: 'aa',
+                          )));
+                },
+                child: Text('Scan Screen')),
+          ],
+        ),
       ),
       drawer: Drawer(
         child: SingleChildScrollView(
@@ -38,7 +72,7 @@ class _ScreenState extends State<Screen> {
         children: [
           menuItem(1, 'Scan', Icons.dashboard_outlined,
               currentPage == DrawerSection.Scan ? true : false),
-          menuItem(2, 'CreatCode', Icons.dashboard_customize_outlined,
+          menuItem(2, 'CreateCode', Icons.dashboard_customize_outlined,
               currentPage == DrawerSection.CreateCode ? true : false),
           menuItem(3, 'LogOut', Icons.logout,
               currentPage == DrawerSection.LogOut ? true : false),
@@ -49,16 +83,16 @@ class _ScreenState extends State<Screen> {
 
   Widget menuItem(int id, String title, IconData icon, bool selected) {
     return Material(
-      color: selected?Colors.grey[300]:Colors.transparent,
+      color: selected ? Colors.grey[300] : Colors.transparent,
       child: InkWell(
         onTap: () {
           Navigator.pop(context);
           setState(() {
             if (id == 1) {
               currentPage == DrawerSection.Scan;
-            }else if(id==2){
+            } else if (id == 2) {
               currentPage == DrawerSection.CreateCode;
-            }else if(id==2){
+            } else if (id == 2) {
               currentPage == DrawerSection.LogOut;
             }
           });
@@ -69,10 +103,10 @@ class _ScreenState extends State<Screen> {
             children: [
               Expanded(
                   child: Icon(
-                    icon,
-                    size: 20,
-                    color: Colors.black,
-                  )),
+                icon,
+                size: 20,
+                color: Colors.black,
+              )),
               Expanded(
                   flex: 4,
                   child: Text(
@@ -117,7 +151,7 @@ class _Header_drawerState extends State<Header_drawer> {
             decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 image:
-                DecorationImage(image: AssetImage('images/Screen5.png'))),
+                    DecorationImage(image: AssetImage('images/Screen5.png'))),
           ),
           const Text(
             'AmlElsayed',

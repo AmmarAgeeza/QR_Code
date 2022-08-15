@@ -10,8 +10,16 @@ class UserFields {
   static const String day4 = '_Day4';
   static const String day5 = '_Day5';
 
-  static List<String> getFields() =>
-      [id, name, email, day1, day2, day3, day4, day5];
+  static List<String> getFields() => [
+        id,
+        name,
+        email,
+        day1,
+        day2,
+        day3,
+        day4,
+        day5,
+      ];
 }
 
 class User {
@@ -26,34 +34,35 @@ class User {
 
   const User(
       {required this.id,
-        required this.name,
-        required this.email,
-        this.day1 = '0',
-        this.day2 = '0',
-        this.day3 = '0',
-        this.day4 = '0',
-        this.day5 = '0'});
+      required this.name,
+      required this.email,
+      this.day1 = '0',
+      this.day2 = '0',
+      this.day3 = '0',
+      this.day4 = '0',
+      this.day5 = '0'});
 
   static User fromJson(Map<String, dynamic> json) => User(
-    id: jsonDecode(json[UserFields.id]),
-    name: json[UserFields.name],
-    email: json[UserFields.email],
-    day1: json[UserFields.day1],
-    day2: json[UserFields.day2],
-    day3: json[UserFields.day3],
-    day4: json[UserFields.day4],
-    day5: json[UserFields.day5],
-  );
+        id: jsonDecode(json[UserFields.id]),
+        name: json[UserFields.name],
+        email: json[UserFields.email],
+        day1: json[UserFields.day1],
+        day2: json[UserFields.day2],
+        day3: json[UserFields.day3],
+        day4: json[UserFields.day4],
+        day5: json[UserFields.day5],
+      );
+
   Map<String, dynamic> toJson() => {
-    UserFields.id: id,
-    UserFields.name: name,
-    UserFields.email: email,
-    UserFields.day1: day1,
-    UserFields.day2: day2,
-    UserFields.day3: day3,
-    UserFields.day4: day4,
-    UserFields.day5: day5,
-  };
+        UserFields.id: id,
+        UserFields.name: name,
+        UserFields.email: email,
+        UserFields.day1: day1,
+        UserFields.day2: day2,
+        UserFields.day3: day3,
+        UserFields.day4: day4,
+        UserFields.day5: day5,
+      };
 
   setDay(String daySelected) {
     if (daySelected == '_Day1') {
@@ -69,3 +78,4 @@ class User {
     }
   }
 }
+

@@ -61,10 +61,15 @@ class _QrGenerateState extends State<QrGenerate> {
                                 spreadRadius: 2)
                           ]
                       ),
-                      child: QrImage(
-                        backgroundColor: Colors.white,
-                        data: controller.text,
-                        size: 200,
+                      child: Column(
+                        children: [
+                          Text(controller.text,),
+                          QrImage(
+                            backgroundColor: Colors.white,
+                            data: controller.text,
+                            size: 200,
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -80,7 +85,7 @@ class _QrGenerateState extends State<QrGenerate> {
                       contentPadding:
                       EdgeInsets.symmetric(horizontal: 15, vertical: 25),
                       label: Text('Enter Your Text'),
-                      hintText: ("QR will be generated automaticaly "),
+                      hintText: ("QR will be generated automatically "),
                       border: OutlineInputBorder(),
                     ),
                   ),
