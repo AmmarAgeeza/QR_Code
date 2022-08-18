@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:qr_code_mind_game/screens/drawer.dart';
 
 import '../layout/home_page.dart';
 import '../widgets/custom_image.dart';

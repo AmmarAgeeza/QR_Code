@@ -31,7 +31,8 @@ class _GetUserByIdState extends State<GetUserById> {
         ),
         backgroundColor: Colors.redAccent,
       ));
-    } else {
+    } else
+    {
       Api.updateCell(
           id: int.parse(widget.qrInfoID!),
           key: widget.dropDownValueDay,

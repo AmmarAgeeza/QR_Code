@@ -63,7 +63,6 @@ class _QrGenerateState extends State<QrGenerate> {
                       ),
                       child: Column(
                         children: [
-                          Text(controller.text,),
                           QrImage(
                             backgroundColor: Colors.white,
                             data: controller.text,
@@ -92,8 +91,9 @@ class _QrGenerateState extends State<QrGenerate> {
                   SizedBox(height: 30,),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                          primary: Color.fromARGB(255,50, 180, 250),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 25),
+                          primary: Color.fromARGB(255, 50, 180, 250),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50))),
                       onPressed: () async {
@@ -114,7 +114,7 @@ class _QrGenerateState extends State<QrGenerate> {
                           // and use it to show a SnackBar.
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
-                        else{
+                        else {
                           final snackBar = SnackBar(
                             content: const Text('Enter your Data'),
                             action: SnackBarAction(
@@ -129,18 +129,21 @@ class _QrGenerateState extends State<QrGenerate> {
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       },
-                      child: Text('Save',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)),
+                      child: Text('Save', style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w400),)),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                        primary: Color.fromARGB(255,50, 180, 250),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 25),
+                        primary: Color.fromARGB(255, 50, 180, 250),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50))),
                     child: const Text('Scan Code'),
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const ScanQRCodePage()),
+                        MaterialPageRoute(builder: (
+                            context) => const ScanQRCodePage()),
                       );
                     },
                   ),
