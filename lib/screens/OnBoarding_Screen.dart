@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
+import '../layout/home_page.dart';
+import '../widgets/custom_image.dart';
 
-class OnBoarding extends StatelessWidget {
+class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
-    );
-  }
+  _OnBoardingState createState() => _OnBoardingState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _OnBoardingState extends State<OnBoarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,30 +19,50 @@ class _MyHomePageState extends State<MyHomePage> {
         pages: [
           PageViewModel(
             title: 'Qr Code',
-            body: 'Each member of the audience has his own Qr Code to be able to enter the event.',
-            image: const Build_Images(image: 'images/audience.PNG',),
-            decoration: getPageDecoration(),),
+            body:
+                'Each member of the audience has his own Qr Code to be able to enter the event.',
+            image: const BuildImages(
+              image: 'images/audience.PNG',
+            ),
+            decoration: getPageDecoration(),
+          ),
           PageViewModel(
             title: 'Scan Qr Code',
-            body: 'Each member scans their Qr code to register their attendance every day',
-            image: const Build_Images(image: 'images/scan.PNG',),
-            decoration: getPageDecoration(),),
+            body:
+                'Each member scans their Qr code to register their attendance every day',
+            image: const BuildImages(
+              image: 'images/scan.PNG',
+            ),
+            decoration: getPageDecoration(),
+          ),
           PageViewModel(
             title: 'Acception',
-            body: 'If the QR Code is present in the database, the member will be registered successfully',
-            image: const Build_Images(image: 'images/accept1.PNG',),
-            decoration: getPageDecoration(),),
+            body:
+                'If the QR Code is present in the database, the member will be registered successfully',
+            image: const BuildImages(
+              image: 'images/accept1.PNG',
+            ),
+            decoration: getPageDecoration(),
+          ),
           PageViewModel(
             title: 'Rejection',
-            body: 'If the QR Code is not present in the database or was registered on the same day before, the program will not accept this code',
-            image: const Build_Images(image: 'images/reject1.PNG',),
-            decoration: getPageDecoration(),),
-
+            body:
+                'If the QR Code is not present in the database or was registered on the same day before, the program will not accept this code',
+            image: const BuildImages(
+              image: 'images/reject1.PNG',
+            ),
+            decoration: getPageDecoration(),
+          ),
         ],
         next: const Icon(Icons.arrow_forward),
         done: const Text(
-          'Done', style: TextStyle(fontWeight: FontWeight.bold),),
-        onDone: () {},
+          'Done',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        onDone: () {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const MyHomePage()));
+        },
         showSkipButton: true,
         skip: const Text('Skip'),
         dotsDecorator: getDotDecoration(),
@@ -78,17 +88,6 @@ class _MyHomePageState extends State<MyHomePage> {
         activeSize: const Size(22, 10),
         activeColor: Colors.blue,
         activeShape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)));
-  }
-}
-
-class Build_Images extends StatelessWidget {
-  const Build_Images({Key? key, required this.image}) : super(key: key);
-
-  final String image;
-
-  @override
-  Widget build(BuildContext context) {
-    return Image(image: AssetImage(image), width: 350,);
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)));
   }
 }
