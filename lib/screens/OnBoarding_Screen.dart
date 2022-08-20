@@ -62,10 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   PageDecoration getPageDecoration() {
     return const PageDecoration(
-      titleTextStyle: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
-      bodyTextStyle: TextStyle(fontSize: 20),
-      imagePadding: EdgeInsets.all(26),
-      titlePadding: EdgeInsets.zero,
+      titleTextStyle: TextStyle(fontSize: 33, fontWeight: FontWeight.w600),
+      bodyTextStyle: TextStyle(fontSize: 22),
+      imagePadding: EdgeInsets.all(50),
+      titlePadding: EdgeInsets.all(8),
       bodyPadding: EdgeInsets.all(20),
       pageColor: Colors.white,
     );
