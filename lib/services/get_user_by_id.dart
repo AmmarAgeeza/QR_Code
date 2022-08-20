@@ -17,35 +17,44 @@ class GetUserById extends StatefulWidget {
 class _GetUserByIdState extends State<GetUserById> {
   // Future<Widget>
   check() async {
-    final user = await Api.getById(int.parse(widget.qrInfoID!));
-    print(user!.toJson());
-
-    if (user.setDay(widget.dropDownValueDay) == '1') {
-      // print("exist");
-
+    //! - if user not exist ....................
+    if (await Api.getById(int.parse(widget.qrInfoID!)) == null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
-          "هذا الطالب تم تسجيله من قبل",
+          "هذا الطالب لم يسجل من قبل",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 23, color: Colors.white),
         ),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.amberAccent,
       ));
-    } else
-    {
-      Api.updateCell(
-          id: int.parse(widget.qrInfoID!),
-          key: widget.dropDownValueDay,
-          value: '1');
-      // print('put');
-      // Fluttertoast.showToast(msg: "put", fontSize: 18);
-
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("هذا الطالب تم تسجيله يمكنه الدخول",
+    }
+    //! - if user exist ....................
+    else {
+      final user = await Api.getById(int.parse(widget.qrInfoID!));
+      //! - if user already registered  ....................
+      if (user!.setDay(widget.dropDownValueDay) == '1') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            "هذا الطالب تم تسجيله من قبل",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 23, color: Colors.white)),
-        backgroundColor: Colors.green,
-      ));
+            style: TextStyle(fontSize: 23, color: Colors.white),
+          ),
+          backgroundColor: Colors.redAccent,
+        ));
+      }
+      //! - if user not registered ....................
+      else {
+        Api.updateCell(
+            id: int.parse(widget.qrInfoID!),
+            key: widget.dropDownValueDay,
+            value: '1');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("هذا الطالب تم تسجيله يمكنه الدخول",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 23, color: Colors.white)),
+          backgroundColor: Colors.green,
+        ));
+      }
     }
   }
 
