@@ -16,8 +16,12 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    Api.init().then(
-            (covariant)=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnBoarding())));
+    Api.init()
+        .then((covariant) => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => OnBoarding())))
+        .catchError((e) {
+      print(e.toString());
+    });
 
     // Timer(
     //     const Duration(seconds: 5),

@@ -45,6 +45,7 @@ dependencies:
   gsheets: ^0.4.2
   # fluttertoast: ^8.0.9
   fluttertoast: ^8.0.9
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
