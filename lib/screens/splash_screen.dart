@@ -1,7 +1,8 @@
-import 'dart:async';
+//import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../helper/api_gsheets.dart';
 import 'OnBoarding_Screen.dart';
 
 class Splash extends StatefulWidget {
@@ -15,10 +16,13 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    Timer(
-        const Duration(seconds: 5),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => OnBoarding())));
+    Api.init().then(
+            (covariant)=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnBoarding())));
+
+    // Timer(
+    //     const Duration(seconds: 5),
+    //     () => Navigator.pushReplacement(
+    //         context, MaterialPageRoute(builder: (context) => OnBoarding())));
   }
 
   @override
