@@ -2,7 +2,7 @@ import 'package:qr_code_mind_game/models/attendee.dart';
 
 import '../../helper/api.dart';
 
-class GetUserByID {
+class GetUserByIDFromQR {
   Future getUserByIDFromQR({
     required String id,
   }) async {
@@ -11,18 +11,15 @@ class GetUserByID {
         url:
             'https://www.ieee-bub.com/API/API/v1/event_attendee/flutter-2022/check_member',
         body: {
-          "data":{
-            "attendee_code":id,
+          "data": {
+            "attendee_code": id,
           }
         });
     print(data);
-    if(data['data']=="False, Error Occured while return data"){
-      throw Exception('Not Found');
-    }
-    else{
+    if (data['data'] == "False, Error Occured while return data") {
+      return null;
+    } else {
       return Attendee.fromJson(data['data'][0]);
-
     }
   }
 }
-

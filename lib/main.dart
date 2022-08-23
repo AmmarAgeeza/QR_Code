@@ -14,7 +14,7 @@ void main() async {
   // await GetAllProducts().getAllProducts();
   try {
     Attendee attendee =
-        await GetUserByID().getUserByIDFromQR(id: "IEEE MIND-GAME141935292");
+        await GetUserByIDFromQR().getUserByIDFromQR(id: "IEEE MIND-GAME141935292");
     print(attendee.name);
    await CheckUserAttendance().checkUserAttendance(id: '8');
    await UpdateAttendanceByDay().updateAttendanceByDay(id: '8');

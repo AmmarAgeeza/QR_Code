@@ -23,7 +23,7 @@ class UserFields {
 }
 
 class User {
-  final int? id;
+  final String? id;
   final String name;
   final String email;
   final String day1;
@@ -43,7 +43,7 @@ class User {
       this.day5 = '0'});
 
   static User fromJson(Map<String, dynamic> json) => User(
-        id: jsonDecode(json[UserFields.id]),
+        id: json[UserFields.id],
         name: json[UserFields.name],
         email: json[UserFields.email],
         day1: json[UserFields.day1],

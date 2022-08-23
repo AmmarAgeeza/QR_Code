@@ -48,7 +48,7 @@ class Api {
   }
 
   // ToDo:: 3- select item by id .............................................
-  static Future<User?> getById(int id) async {
+  static Future<User?> getById(String id) async {
     if (_userSheet == null) return null;
 
     final json = await _userSheet!.values.map
@@ -58,7 +58,7 @@ class Api {
 
   // ToDo:: 4- update cell for row by id and days .............................................
   static Future<bool> updateCell({
-    required int id,
+    required String id,
     required String key,
     required dynamic value,
   }) async {

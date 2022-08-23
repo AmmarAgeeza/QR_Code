@@ -18,7 +18,7 @@ class _GetUserByIdState extends State<GetUserById> {
   // Future<Widget>
   check() async {
     //! - if user not exist ....................
-    if (await Api.getById(int.parse(widget.qrInfoID!)) == null) {
+    if (await Api.getById(widget.qrInfoID!) == null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
           "هذا الطالب لم يسجل من قبل",
@@ -30,7 +30,7 @@ class _GetUserByIdState extends State<GetUserById> {
     }
     //! - if user exist ....................
     else {
-      final user = await Api.getById(int.parse(widget.qrInfoID!));
+      final user = await Api.getById(widget.qrInfoID!);
       //! - if user already registered  ....................
       if (user!.setDay(widget.dropDownValueDay) == '1') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -45,7 +45,7 @@ class _GetUserByIdState extends State<GetUserById> {
       //! - if user not registered ....................
       else {
         Api.updateCell(
-            id: int.parse(widget.qrInfoID!),
+            id: widget.qrInfoID!,
             key: widget.dropDownValueDay,
             value: '1');
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

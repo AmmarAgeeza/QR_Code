@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_mind_game/models/attendee.dart';
 
 class Attendance extends StatelessWidget {
-  final String username, id, email, day;
+  final Attendee attendee;
 
   const Attendance(
       {Key? key,
-      required this.username,
-      required this.id,
-      required this.email,
-      required this.day})
+      required this.attendee})
       : super(key: key);
 
   @override
@@ -43,7 +41,7 @@ class Attendance extends StatelessWidget {
               //mainAxisAlignment:MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  'Name : $username',
+                  'Name : ${attendee.name}',
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -71,7 +69,7 @@ class Attendance extends StatelessWidget {
                   height: 10,
                 ),
 
-                Text('Id : $id',
+                Text('Id : ${attendee.id}',
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -86,7 +84,7 @@ class Attendance extends StatelessWidget {
                   color: Colors.black54,
                   height: 10,
                 ),
-                Text('Email : $email',
+                Text('Email : ${attendee.email}',
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -101,7 +99,7 @@ class Attendance extends StatelessWidget {
                   color: Colors.black54,
                   height: 10,
                 ),
-                Text('Day : $day',
+                Text('Day : ${attendee.attendTime}',
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -123,7 +121,7 @@ class Attendance extends StatelessWidget {
             padding: const EdgeInsets.only(
                 left: 20, bottom: 20, top: 350, right: 20),
             child: Text(
-              '$username attended',
+              '${attendee.name} attended',
               style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w400,

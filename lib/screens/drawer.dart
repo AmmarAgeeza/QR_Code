@@ -37,13 +37,14 @@ class _ScreenState extends State<Screen> {
                 child: Text('Create Screen')),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => Attendance(
-                            username: 'Ammar',
-                            id: '1',
-                            day: '1',
-                            email: 'aa',
-                          )));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (_) => Attendance(
+                  //
+                  //           username: 'Ammar',
+                  //           id: '1',
+                  //           day: '1',
+                  //           email: 'aa',
+                  //         )));
                 },
                 child: Text('Scan Screen')),
           ],

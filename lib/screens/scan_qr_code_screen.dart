@@ -2,7 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'package:qr_code_mind_game/screens/attendance.dart';
 import 'package:qr_code_mind_game/services/get_user_by_id.dart';
+
+import '../models/attendee.dart';
+import '../services/api_services/check_if_user_is_attend_today.dart';
+import '../services/api_services/get_user.dart';
+import '../services/api_services/update_attendance_by_day.dart';
 
 class ScanQRCodePage extends StatefulWidget {
   const ScanQRCodePage({Key? key}) : super(key: key);
@@ -137,6 +143,63 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
                                     ),
                                   ]),
                             ]),
+                            MaterialButton(
+                              onPressed: () async {
+                                Attendee? attendee = await GetUserByIDFromQR()
+                                    .getUserByIDFromQR(id: qrInfo ?? '');
+                                if (attendee == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "هذا الطالب لم يسجل من قبل",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 23, color: Colors.white),
+                                      ),
+                                      backgroundColor: Colors.amberAccent,
+                                    ),
+                                  );
+                                } else {
+                                  bool isAttended = await CheckUserAttendance()
+                                      .checkUserAttendance(id: attendee.id);
+                                  if (!isAttended) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                      content: Text(
+                                        "هذا الطالب تم تسجيله من قبل",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 23, color: Colors.white),
+                                      ),
+                                      backgroundColor: Colors.redAccent,
+                                    ));
+                                    UpdateAttendanceByDay()
+                                        .updateAttendanceByDay(id: attendee.id).then((value) {
+                                          attendee=value;
+                                          Navigator.push(context, MaterialPageRoute(builder: (_)=>Attendance(attendee: attendee!)));
+                                    });
+                                  } else {
+                                    UpdateAttendanceByDay()
+                                        .updateAttendanceByDay(id: attendee.id).then((value) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "هذا الطالب تم تسجيله يمكنه الدخول",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 23,
+                                                color: Colors.white)),
+                                        backgroundColor: Colors.green,
+                                      ));
+                                      attendee=value;
+                                      Navigator.push(context, MaterialPageRoute(builder: (_)=>Attendance(attendee: attendee!)));
+                                    });
+
+                                  }
+                                }
+                              },
+                              child: Text('Check With API'),
+                            ),
                           ],
                         ),
                       ),
