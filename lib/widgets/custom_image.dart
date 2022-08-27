@@ -10,6 +10,7 @@ class BuildImages extends StatelessWidget {
     return Image(
       image: AssetImage(image),
       width: 350,
+      height: 230,
     );
   }
 }

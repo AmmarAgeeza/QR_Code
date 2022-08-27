@@ -1,14 +1,13 @@
-// ignore_for_file: library_private_types_in_public_api
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:qr_code_mind_game/screens/attendance.dart';
-import 'package:qr_code_mind_game/services/get_user_by_id.dart';
-
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../models/attendee.dart';
 import '../services/api_services/check_if_user_is_attend_today.dart';
 import '../services/api_services/get_user.dart';
 import '../services/api_services/update_attendance_by_day.dart';
+import '../shared/styles/color_manager.dart';
 
 class ScanQRCodePage extends StatefulWidget {
   const ScanQRCodePage({Key? key}) : super(key: key);
@@ -28,6 +27,9 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
     '_Day4',
     '_Day5',
   ];
+  final qrKey = GlobalKey(debugLabel: 'QR');
+  QRViewController? controller;
+  Barcode? barcode;
 
   String? qrInfo = '-1';
   bool camState = false;
@@ -47,165 +49,169 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
     });
   }
 
+  String scanQrCode = 'Scan QR Code';
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Scanning Screen'),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              if (camState == true) {
+    var size = (MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top);
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: ColorManager.primary,
+        title: const Text('Scan Qr Code'),
+        actions: [
+          IconButton(
+              onPressed: () {
                 setState(() {
-                  camState = false;
+                  barcode = null;
+                  controller!.resumeCamera();
                 });
-              } else {
-                setState(() {
-                  camState = true;
+              },
+              icon: const Icon(Icons.document_scanner_outlined))
+        ],
+      ),
+      body: Column(
+        // mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: ColorManager.primary,
+            ),
+            height: size * 0.8,
+            width: double.infinity,
+            child: QRView(
+              key: qrKey,
+              onQRViewCreated: (QRViewController controller) {
+                setState(() => this.controller = controller);
+                controller.scannedDataStream.listen((barcode) {
+                  setState(() {
+                    this.barcode = barcode;
+                    print(barcode);
+                  });
                 });
-              }
-            },
-            child: const Icon(Icons.camera_alt_outlined),
-          ),
-          body: Center(
-            child: ListView(children: [
-              Container(
-                padding: const EdgeInsets.all(40.0),
-                child: camState
-                    ? Center(
-                        child: SizedBox(
-                          height: 400,
-                          width: 380,
-                          child: QRBarScannerCamera(
-                            onError: (context, error) => Text(
-                              error.toString(),
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Color(0xFF3594DD),
-                              ),
-                            ),
-                            qrCodeCallback: (code) {
-                              qrCallback(code);
-                            },
-                          ),
-                        ),
-                      )
-                    : Center(
-                        child: Column(
-                          //!----------------------------
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Code :: ${qrInfo!}",
-                              style: const TextStyle(
-                                fontSize: 25,
-                              ),
-                            ),
-                            Row(children: [
-                              const SizedBox(
-                                width: 40,
-                              ),
-                              GetUserById(
-                                dropDownValueDay: dropDownValue,
-                                qrInfoID: qrInfo,
-                              ),
-                              const SizedBox(
-                                width: 100,
-                              ),
-                              Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    DropdownButton(
-                                      // Initial Value
-                                      value: dropDownValue,
-
-                                      // Down Arrow Icon
-                                      icon:
-                                          const Icon(Icons.keyboard_arrow_down),
-
-                                      // Array list of items
-                                      items: items.map((String items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: Text(items),
-                                        );
-                                      }).toList(),
-                                      // After selecting the desired option,it will
-                                      // change button value to selected value
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropDownValue = newValue!;
-                                        });
-                                      },
-                                    ),
-                                  ]),
-                            ]),
-                            MaterialButton(
-                              onPressed: () async {
-                                Attendee? attendee = await GetUserByIDFromQR()
-                                    .getUserByIDFromQR(id: qrInfo ?? '');
-                                if (attendee == null) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                        "هذا الطالب لم يسجل من قبل",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 23, color: Colors.white),
-                                      ),
-                                      backgroundColor: Colors.amberAccent,
-                                    ),
-                                  );
-                                } else {
-                                  bool isAttended = await CheckUserAttendance()
-                                      .checkUserAttendance(id: attendee.id);
-                                  if (!isAttended) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content: Text(
-                                        "هذا الطالب تم تسجيله من قبل",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 23, color: Colors.white),
-                                      ),
-                                      backgroundColor: Colors.redAccent,
-                                    ));
-                                    UpdateAttendanceByDay()
-                                        .updateAttendanceByDay(id: attendee.id).then((value) {
-                                          attendee=value;
-                                          Navigator.push(context, MaterialPageRoute(builder: (_)=>Attendance(attendee: attendee!)));
-                                    });
-                                  } else {
-                                    UpdateAttendanceByDay()
-                                        .updateAttendanceByDay(id: attendee.id).then((value) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                        content: Text(
-                                            "هذا الطالب تم تسجيله يمكنه الدخول",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontSize: 23,
-                                                color: Colors.white)),
-                                        backgroundColor: Colors.green,
-                                      ));
-                                      attendee=value;
-                                      Navigator.push(context, MaterialPageRoute(builder: (_)=>Attendance(attendee: attendee!)));
-                                    });
-
-                                  }
-                                }
-                              },
-                              child: Text('Check With API'),
-                            ),
-                          ],
-                        ),
-                      ),
+              },
+              overlay: QrScannerOverlayShape(
+                borderColor: Colors.blueAccent,
+                borderLength: 20,
+                borderRadius: 10,
+                borderWidth: 10,
+                cutOutSize: MediaQuery.of(context).size.width * 0.8,
               ),
-            ]),
+            ),
           ),
-        ));
+          SizedBox(
+            height: size * 0.02,
+          ),
+          isLoading?CircularProgressIndicator(color: ColorManager.primary,):Container(
+            width: MediaQuery.of(context).size.width * 0.6,
+            height: size * 0.05,
+            child: ElevatedButton.icon(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(ColorManager.primary)),
+              onPressed: () async {
+                checkAttendee();
+
+              },
+              icon: Icon(Icons.document_scanner_outlined),
+              label: Text(
+                'Validate',
+                style: TextStyle(fontSize: 25),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: size * 0.03,
+          ),
+          Container(
+              // alignment: Alignment.center,
+              height: size * 0.1,
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: Text(barcode != null ? 'Result : ${barcode!.code}' : '')),
+        ],
+      ),
+    );
+  }
+bool isLoading=false;
+  void checkAttendee() async {
+    setState((){
+      isLoading=true;
+    });
+    try
+    {
+
+      Attendee? attendee = await GetUserByIDFromQR()
+          .getUserByIDFromQR(id: barcode!.code ?? '');
+      if (attendee == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              "Attendee Not Found",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 23, color: Colors.white),
+            ),
+            backgroundColor: Colors.amberAccent,
+          ),
+        );
+      } else {
+        bool isAttended = await CheckUserAttendance()
+            .checkUserAttendance(id: attendee.id);
+        if (!isAttended) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              "Attendee Existed Before Today",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 23, color: Colors.white),
+            ),
+            backgroundColor: Colors.redAccent,
+          ));
+          UpdateAttendanceByDay()
+              .updateAttendanceByDay(id: attendee.id)
+              .then((value) {
+            attendee = value;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => Attendance(attendee: attendee!))).then((value) => setState((){barcode=null;}));
+          });
+        } else {
+          UpdateAttendanceByDay()
+              .updateAttendanceByDay(id: attendee.id)
+              .then((value) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Attendee Registered Successfully ",
+                  textAlign: TextAlign.center,
+                  style:
+                  TextStyle(fontSize: 23, color: Colors.white)),
+              backgroundColor: Colors.green,
+            ));
+            attendee = value;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => Attendance(attendee: attendee!))).then((value) => setState((){barcode=null;}));
+          });
+        }
+      }
+    }on SocketException catch(_){ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Please Connect To Internet ",
+          textAlign: TextAlign.center,
+          style:
+          TextStyle(fontSize: 23, color: Colors.white)),
+      backgroundColor: Colors.red,
+    ));}
+    catch(e){ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Enter Valid QR Code",
+          textAlign: TextAlign.center,
+          style:
+          TextStyle(fontSize: 23, color: Colors.white)),
+      backgroundColor: Colors.blueAccent,
+    ));}
+    setState((){
+      isLoading=false;
+    });
   }
 }

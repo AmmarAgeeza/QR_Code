@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class UserFields {
   static const String id = '_ID';

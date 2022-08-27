@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_mind_game/screens/attendance.dart';
 import 'package:qr_code_mind_game/screens/create_qr_code_screen.dart';
 import 'package:qr_code_mind_game/screens/scan_qr_code_screen.dart';
 

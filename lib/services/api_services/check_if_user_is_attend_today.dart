@@ -1,4 +1,3 @@
-import 'package:qr_code_mind_game/models/attendee.dart';
 
 import '../../helper/api.dart';
 
