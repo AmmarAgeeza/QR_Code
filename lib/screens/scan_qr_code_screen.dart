@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:qr_code_mind_game/helper/api_gsheets.dart';
 import 'package:qr_code_mind_game/screens/attendance.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../models/attendee.dart';
@@ -105,24 +106,27 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
           SizedBox(
             height: size * 0.02,
           ),
-          isLoading?CircularProgressIndicator(color: ColorManager.primary,):Container(
-            width: MediaQuery.of(context).size.width * 0.6,
-            height: size * 0.05,
-            child: ElevatedButton.icon(
-              style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(ColorManager.primary)),
-              onPressed: () async {
-                checkAttendee();
-
-              },
-              icon: Icon(Icons.document_scanner_outlined),
-              label: Text(
-                'Validate',
-                style: TextStyle(fontSize: 25),
-              ),
-            ),
-          ),
+          isLoading
+              ? CircularProgressIndicator(
+                  color: ColorManager.primary,
+                )
+              : Container(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  height: size * 0.05,
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(ColorManager.primary)),
+                    onPressed: () async {
+                      checkAttendee();
+                    },
+                    icon: Icon(Icons.document_scanner_outlined),
+                    label: Text(
+                      'Validate',
+                      style: TextStyle(fontSize: 25),
+                    ),
+                  ),
+                ),
           SizedBox(
             height: size * 0.03,
           ),
@@ -135,19 +139,21 @@ class _ScanQRCodePageState extends State<ScanQRCodePage> {
       ),
     );
   }
-bool isLoading=false;
-  void checkAttendee() async {
-    setState((){
-      isLoading=true;
-    });
-    try
-    {
 
-      Attendee? attendee = await GetUserByIDFromQR()
-          .getUserByIDFromQR(id: barcode!.code ?? '');
+  bool isLoading = false;
+
+  void checkAttendee() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      Attendee? attendee =
+          await GetUserByIDFromQR().getUserByIDFromQR(id: barcode!.code ?? '');
       if (attendee == null) {
         ScaffoldMessenger.of(context).showSnackBar(
+
           const SnackBar(
+
             content: Text(
               "Attendee Not Found",
               textAlign: TextAlign.center,
@@ -157,8 +163,8 @@ bool isLoading=false;
           ),
         );
       } else {
-        bool isAttended = await CheckUserAttendance()
-            .checkUserAttendance(id: attendee.id);
+        bool isAttended =
+            await CheckUserAttendance().checkUserAttendance(id: attendee.id);
         if (!isAttended) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text(
@@ -173,45 +179,64 @@ bool isLoading=false;
               .then((value) {
             attendee = value;
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => Attendance(attendee: attendee!))).then((value) => setState((){barcode=null;}));
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => Attendance(attendee: attendee!)))
+                .then((value) => setState(() {
+                      barcode = null;
+                    }));
           });
         } else {
           UpdateAttendanceByDay()
               .updateAttendanceByDay(id: attendee.id)
-              .then((value) {
+              .then((value)  async{
+            if (attendee != null) {
+              await Api.insertData(
+                attendTime: attendee!.attendTime!,
+                id: attendee!.id,
+                name: attendee!.name,
+                academicYear: attendee!.academicYear,
+                age: attendee!.age,
+                attendeeCode: attendee!.attendeeCode,
+                city: attendee!.city,
+                email: attendee!.email,
+                phone: attendee!.phone,
+              );
+            }
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text("Attendee Registered Successfully ",
                   textAlign: TextAlign.center,
-                  style:
-                  TextStyle(fontSize: 23, color: Colors.white)),
+                  style: TextStyle(fontSize: 23, color: Colors.white)),
               backgroundColor: Colors.green,
             ));
             attendee = value;
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => Attendance(attendee: attendee!))).then((value) => setState((){barcode=null;}));
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => Attendance(attendee: attendee!)))
+                .then((value) => setState(() {
+                      barcode = null;
+                    }));
           });
         }
       }
-    }on SocketException catch(_){ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Please Connect To Internet ",
-          textAlign: TextAlign.center,
-          style:
-          TextStyle(fontSize: 23, color: Colors.white)),
-      backgroundColor: Colors.red,
-    ));}
-    catch(e){ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Enter Valid QR Code",
-          textAlign: TextAlign.center,
-          style:
-          TextStyle(fontSize: 23, color: Colors.white)),
-      backgroundColor: Colors.blueAccent,
-    ));}
-    setState((){
-      isLoading=false;
+    } on SocketException catch (_) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Please Connect To Internet ",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 23, color: Colors.white)),
+        backgroundColor: Colors.red,
+      ));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Enter Valid QR Code",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 23, color: Colors.white)),
+        backgroundColor: Colors.blueAccent,
+      ));
+    }
+    setState(() {
+      isLoading = false;
     });
   }
 }

@@ -3,14 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class API {
-
   Future postData(
       {required String url, required dynamic body, String? token}) async {
-    http.Response response = await http.post(Uri.parse(url),
-        body: jsonEncode(body),
-        headers: {
-          'Content-Type': 'application/json',
-        });
+    http.Response response =
+        await http.post(Uri.parse(url), body: jsonEncode(body), headers: {
+      'Content-Type': 'application/json',
+    });
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {

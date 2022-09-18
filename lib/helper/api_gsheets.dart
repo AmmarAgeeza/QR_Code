@@ -29,17 +29,54 @@ class Api {
       final spreadsheet = await _gsheets.spreadsheet(_spreadsheetId);
       _userSheet = await _getWorkSheet(spreadsheet, title: 'Users');
 
-      final firstRow = UserFields.getFields();
+      final firstRow = AttendeeFields.getFields();
       _userSheet!.values.insertRow(1, firstRow);
     } catch (err) {
       print('Init Error: $err');
     }
   }
 
+  static Future<bool> insertData({
+    required String id,
+    required String attendeeCode,
+    required String name,
+    required String email,
+    required String phone,
+    required String age,
+    required String city,
+    required String academicYear,
+    required String attendTime,
+  }) async {
+    final spreadsheet = await _gsheets.spreadsheet(_spreadsheetId);
+    _userSheet = await _getWorkSheet(spreadsheet, title: 'Users');
+    if (_userSheet == null) return false;
+    return _userSheet!.values.appendRow([
+      attendTime,
+      id,
+      attendeeCode,
+      name,
+      email,
+      phone,
+      age,
+      city,
+      academicYear,
+    ]);
+  }
+
+  static const String id = 'id';
+  static const String attendeeCode = 'attendeeCode';
+  static const String name = 'name';
+  static const String email = 'email';
+  static const String phone = 'phone';
+  static const String age = 'age';
+  static const String city = 'city';
+  static const String academicYear = 'academicYear';
+  static const String? attendTime = 'attendTime';
+
   static Future<Worksheet> _getWorkSheet(
-      Spreadsheet spreadsheet, {
-        required String title,
-      }) async {
+    Spreadsheet spreadsheet, {
+    required String title,
+  }) async {
     try {
       return await spreadsheet.addWorksheet(title);
     } catch (err) {

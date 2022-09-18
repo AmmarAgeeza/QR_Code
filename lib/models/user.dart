@@ -1,3 +1,26 @@
+class AttendeeFields {
+  static const String id = 'id';
+  static const String attendeeCode = 'attendeeCode';
+  static const String name = 'name';
+  static const String email = 'email';
+  static const String phone = 'phone';
+  static const String age = 'age';
+  static const String city = 'city';
+  static const String academicYear = 'academicYear';
+  static const String attendTime = 'attendTime';
+
+  static List<String> getFields() => [
+        attendTime,
+        id,
+        attendeeCode,
+        name,
+        email,
+        phone,
+        age,
+        city,
+        academicYear,
+      ];
+}
 
 class UserFields {
   static const String id = '_ID';
@@ -77,4 +100,3 @@ class User {
     }
   }
 }
-

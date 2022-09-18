@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_mind_game/screens/splash_screen.dart';
 import 'package:qr_code_mind_game/shared/network/local/shared_pref.dart';
 
+import 'helper/api_gsheets.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Api.init();
+  await Api.init();
   // await GetAllProducts().getAllProducts();
   try {
     //  Attendee attendee =
