@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_mind_game/screens/attendance.dart';
 import 'package:qr_code_mind_game/screens/create_qr_code_screen.dart';
 import 'package:qr_code_mind_game/screens/scan_qr_code_screen.dart';
 
@@ -37,13 +36,14 @@ class _ScreenState extends State<Screen> {
                 child: Text('Create Screen')),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => Attendance(
-                            username: 'Ammar',
-                            id: '1',
-                            day: '1',
-                            email: 'aa',
-                          )));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (_) => Attendance(
+                  //
+                  //           username: 'Ammar',
+                  //           id: '1',
+                  //           day: '1',
+                  //           email: 'aa',
+                  //         )));
                 },
                 child: Text('Scan Screen')),
           ],

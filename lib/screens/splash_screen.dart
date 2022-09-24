@@ -1,8 +1,11 @@
-//import 'dart:async';
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:qr_code_mind_game/screens/scan_qr_code_screen.dart';
+import 'package:qr_code_mind_game/shared/network/local/shared_pref.dart';
 
-import '../helper/api_gsheets.dart';
+import '../shared/styles/color_manager.dart';
 import 'OnBoarding_Screen.dart';
 
 class Splash extends StatefulWidget {
@@ -16,17 +19,16 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    Api.init()
-        .then((covariant) => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => OnBoarding())))
-        .catchError((e) {
-      print(e.toString());
-    });
 
-    // Timer(
-    //     const Duration(seconds: 5),
-    //     () => Navigator.pushReplacement(
-    //         context, MaterialPageRoute(builder: (context) => OnBoarding())));
+    Timer(
+        const Duration(seconds: 3),
+        () async{
+          bool notFirst= await CashHelper.getData();
+          print(notFirst);
+        ! notFirst? Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => OnBoarding())): Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => ScanQRCodePage()));
+        });
   }
 
   @override
@@ -35,16 +37,9 @@ class _SplashState extends State<Splash> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomRight,
-                colors: [
-              Color(0xFF320940),
-              Color(0xFF320940),
-            ]
-                //Color(0xFF703737)Color(0xFF713881)
-                )),
+        decoration: BoxDecoration(
+          color: ColorManager.primary,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,

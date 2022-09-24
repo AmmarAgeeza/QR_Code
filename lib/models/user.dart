@@ -1,4 +1,26 @@
-import 'dart:convert';
+class AttendeeFields {
+  static const String id = 'id';
+  static const String attendeeCode = 'attendeeCode';
+  static const String name = 'name';
+  static const String email = 'email';
+  static const String phone = 'phone';
+  static const String age = 'age';
+  static const String city = 'city';
+  static const String academicYear = 'academicYear';
+  static const String attendTime = 'attendTime';
+
+  static List<String> getFields() => [
+        attendTime,
+        id,
+        attendeeCode,
+        name,
+        email,
+        phone,
+        age,
+        city,
+        academicYear,
+      ];
+}
 
 class UserFields {
   static const String id = '_ID';
@@ -23,7 +45,7 @@ class UserFields {
 }
 
 class User {
-  final int? id;
+  final String? id;
   final String name;
   final String email;
   final String day1;
@@ -43,7 +65,7 @@ class User {
       this.day5 = '0'});
 
   static User fromJson(Map<String, dynamic> json) => User(
-        id: jsonDecode(json[UserFields.id]),
+        id: json[UserFields.id],
         name: json[UserFields.name],
         email: json[UserFields.email],
         day1: json[UserFields.day1],
@@ -78,4 +100,3 @@ class User {
     }
   }
 }
-

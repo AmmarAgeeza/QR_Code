@@ -17,6 +17,7 @@ class UpdateAttendanceByDay {
           }
         });
     print(data);
+    return Attendee.fromJson(data['data'][0]);
     // if(data['data']=="False, Error Occured while return data"){
     //   throw Exception('Not Found');
     // }

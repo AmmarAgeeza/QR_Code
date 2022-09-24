@@ -8,6 +8,7 @@ class Attendee {
   final String city;
   final String academicYear;
   final String paymentStatus;
+  final String? attendTime;
 
   Attendee(
       {required this.id,
@@ -18,7 +19,7 @@ class Attendee {
       required this.age,
       required this.city,
       required this.academicYear,
-      required this.paymentStatus});
+      required this.paymentStatus,this.attendTime});
 
   factory Attendee.fromJson(Map jsonData) {
     return Attendee(
@@ -31,6 +32,7 @@ class Attendee {
       city: jsonData['city'],
       academicYear: jsonData['acadimic_year'],
       paymentStatus: jsonData['payment_status'],
+      attendTime: jsonData['attend_time']??''
     );
   }
 }
